@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import SheetForm from "./forms/Sheet";
 import SlitterForm from "./forms/Slitter";
 import FilmForm from "./forms/Film";
-import { loadSavedStage } from "@/features/production/productionSlice";
+import { setStage } from "@/features/production/productionSlice";
+
+const STORAGE_KEY = "production_stage";
+
+const isValidStage = (value: string | null) =>
+  value === "sheet" || value === "film" || value === "slitter";
 
 // This component selects the current production stage from Redux
 // and renders the correct form for Sheet, Film, or Slitting.
@@ -15,7 +20,11 @@ export default function ProductionFormContainer() {
   const stage = typeof rawStage === "string" ? rawStage.toLowerCase() : "sheet";
 
   useEffect(() => {
-    dispatch(loadSavedStage());
+    if (typeof window === "undefined") return;
+    const saved = window.localStorage.getItem(STORAGE_KEY)?.toLowerCase() ?? null;
+    if (isValidStage(saved)) {
+      dispatch(setStage(saved));
+    }
   }, [dispatch]);
 
   return (
