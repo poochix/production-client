@@ -1,9 +1,13 @@
+import SlitterForm from "@/components/forms/Slitter";
+import Navbar from "@/components/Navbar";
+import ProductionFormContainer from "@/components/ProductionFormsController";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans ">
-      
-    </div>
+    <>
+    <Navbar/>
+    <ProductionFormContainer/>
+    </>
   );
 }
